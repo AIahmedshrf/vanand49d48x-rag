@@ -26,7 +26,10 @@ except ImportError:
 from PyPDF2 import PdfReader
 from docx import Document as DocxDocument
 import csv
-import openpyxl
+try:
+    import openpyxl
+except ImportError:
+    openpyxl = None
 import email
 from bs4 import BeautifulSoup
 from striprtf.striprtf import rtf_to_text

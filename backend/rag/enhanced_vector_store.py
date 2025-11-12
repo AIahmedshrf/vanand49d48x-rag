@@ -13,7 +13,13 @@ from qdrant_client.http.models import Batch
 import uuid
 import numpy as np
 from rank_bm25 import BM25Okapi
-from sentence_transformers import CrossEncoder
+
+# Import CrossEncoder safely with fallback
+try:
+    from sentence_transformers import CrossEncoder
+except ImportError:
+    CrossEncoder = None
+
 import re
 from backend.utils.logging_config import get_logger
 
@@ -34,7 +40,10 @@ class EnterpriseVectorStore:
         
         # Initialize re-ranker
         try:
-            self.re_ranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+            if CrossEncoder is not None:
+                self.re_ranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+            else:
+                self.re_ranker = None
         except Exception as e:
             logger.warning(f"Could not load re-ranker: {e}")
             self.re_ranker = None

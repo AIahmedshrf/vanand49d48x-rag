@@ -10,20 +10,16 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-eng \
     libtesseract-dev \
-    # OpenCV dependencies (architecture-agnostic)
-    libgl1-mesa-glx \
+    # OpenCV dependencies
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
-    libxrender-dev \
+    libxrender1 \
     libgomp1 \
-    # Audio processing
+    # Audio/Video processing (ffmpeg includes video libs)
     ffmpeg \
     libsndfile1 \
-    # Video processing
-    libavcodec-extra \
-    libavformat-dev \
-    libswscale-dev \
     # General utilities
     curl \
     wget \
@@ -31,7 +27,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     pkg-config \
     libmagic1 \
-    libmagic-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
